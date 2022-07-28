@@ -1,0 +1,22 @@
+/*
+Sqoop export is used to migrate data from HDFS back to relational database.
+
+Using Sqoop export, move data from HDFS to mysql.
+
+HDFS location: /user/cloudera/export-dir-cust
+Null String: Empty, MySQL table: customer_exported
+Null-Non-String: 0, Mapper: 3
+*/
+
+[CODE]
+
+sqoop export \
+> --connect jdbc:mysql//localhost/retail_db \
+> --username root \
+> --password cloudera \
+> --table customer_exported \
+> --export-dir /user/cloudera/export-dir-cust \
+> --input-fields-terminated-by "*" \
+> --input-null-string "Empty" \
+> --input-null-non-string 0 \
+> --m 3
