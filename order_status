@@ -1,0 +1,29 @@
+/*
+INSTRUCTIONS:
+connect to MySQL database usign sqoop, import all orders that have order_status as "COMPLETE".
+
+DESCRIPTION:
+A mysql instance is running on the localhost. In that instance, we have to find orders table that contains order's data.
+
+OUTPUT REQUIREMENT:
+Place the customer's file in HDFS directory "/user/cloudera/problem1/orders/parquetdata".
+Use parquet format with tab delimeter and snappy compression.
+Null values represented as -1 for numbers and "NA" for strings.
+/*
+
+[CODE]
+
+sqoop import \
+> --connect jdbc:mysql//localhost/retail_db \
+> --username root \
+> --password cloudera \
+> --table orders \
+> --target dir /user/cloudera/problem1/orders/parquetdata \
+> --fields terminated by '\t' \
+> --where "order_status" = "COMPLETE" \
+> --null-string "NA" \
+> --null-non-string "NA" \
+> --compress \
+> --compression-codec snappy \
+> --as-parquetfile
+
